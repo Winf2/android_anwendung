@@ -1,0 +1,129 @@
+package de.mandi.hallowelt;
+
+import java.util.concurrent.ExecutionException;
+
+import android.R.color;
+import android.R.string;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class MainActivity extends ActionBarActivity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		if (savedInstanceState == null) {
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.container, new PlaceholderFragment()).commit();
+		}
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		final TextView txtVHallo = (TextView) findViewById(R.id.textView1);
+		final Spinner spnProjects = (Spinner) findViewById(R.id.spinner);
+		final Spinner spnActivities = (Spinner) findViewById(R.id.spinner1);
+
+		spnProjects.setPrompt("Projektauftrag");
+		spnActivities.setPrompt("Projektaktivitäten");
+		
+		SoapArrayGetter aGetter;
+
+		try {
+			
+			aGetter = new SoapArrayGetter();
+			
+			String[] sa = aGetter.execute().get();
+			
+
+			// ArrayAdapter<String> adapter = new
+			// ArrayAdapter<String>(getApplicationContext(),
+			// android.R.layout.simple_spinner_item, sa);
+			CustomArrayAdapter<String> adapter = new CustomArrayAdapter<String>(
+					getApplicationContext(), sa);
+
+			spnProjects.setAdapter(adapter);
+
+			spnProjects.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				@Override
+				public void onItemSelected(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					
+					System.out.println((CharSequence) spnProjects.getAdapter()
+							.getItem(arg2));
+
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+
+			for (int i = 0; i < sa.length; i++) {
+				System.out.println(sa[i]);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * A placeholder fragment containing a simple view.
+	 */
+	public static class PlaceholderFragment extends Fragment {
+
+		public PlaceholderFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_main, container,
+					false);
+			return rootView;
+		}
+	}
+
+}

@@ -1,0 +1,12 @@
+1398091654040	Extracts string 'null' into R.string.btnStart
+1398091843666	Rename field 'button2'
+1398091859473	Extracts string 'null' into R.string.btnStop
+1398092654893	Rename type 'workStarter'
+1398095798372	Rename local variable 'ws'
+1398097988068	Extracts string 'null' into R.string.btnStartPause
+1398098028624	Extracts string 'null' into R.string.btnStopPause
+1398098216460	Rename type 'WorkPauser'
+1398100374289	Rename field 'textView1'
+1398100403890	Extracts string 'null' into R.string.txvProject
+1398100449132	Extracts string 'null' into R.string.txvActivity
+1398101149634	Rename package 'de.mandi.hallowelt'

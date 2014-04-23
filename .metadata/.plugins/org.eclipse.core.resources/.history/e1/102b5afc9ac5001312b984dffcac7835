@@ -1,0 +1,12 @@
+package de.mandi.hallowelt;
+
+import android.content.Context;
+import android.widget.ArrayAdapter;
+
+public class ArrayAdapterBlack<T> extends ArrayAdapter<T> {
+   
+	public <T> ArrayAdapterBlack(Context ctx, T [] objects)
+    {
+        super(ctx, android.R.layout.simple_spinner_item);
+    }
+}
